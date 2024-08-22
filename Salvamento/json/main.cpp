@@ -1,19 +1,18 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include <iomanip>
 
 #include "Jogador.hpp"
 #include "json.hpp"
 
-#define CAMINHO_ARQUIVO_SALVAMENTO "arquivoSalvamento.json"
-#define CAMINHO_ARQUIVO_CARREGAMENTO "arquivoCarregamento.json"
+#define CAMINHO_ARQUIVO_SALVAMENTO "json/arquivoSalvamento.json"
+#define CAMINHO_ARQUIVO_CARREGAMENTO "json/arquivoCarregamento.json"
 
-void salvar(const std::vector<Jogador>& jogadores) {
+void salvar(std::vector<Jogador>& jogadores) {
     // Um json para adicionar todos os jogadores:
     nlohmann::ordered_json infoJogadores;
     
-    for (Jogador j : jogadores) {
+    for (Jogador& j : jogadores) {
         // json para salvar as informações de cada jogador
         nlohmann::ordered_json infoJogador;
         j.salvar(infoJogador);
@@ -22,7 +21,7 @@ void salvar(const std::vector<Jogador>& jogadores) {
     std::ofstream jsonOut(CAMINHO_ARQUIVO_SALVAMENTO);
 
     if(!jsonOut) {
-        std::cerr << "BURRO" << std::endl;
+        std::cerr << "Arquivo de salvamento não encontrado" << std::endl;
         exit(1);
     }
     // Define um espaçamento de 4
@@ -30,10 +29,10 @@ void salvar(const std::vector<Jogador>& jogadores) {
     jsonOut.close();
 }
 
-void carregar(const std::vector<Jogador>& jogadores) {
+void carregar(std::vector<Jogador>& jogadores) {
     std::ifstream jsonIn(CAMINHO_ARQUIVO_CARREGAMENTO);
     if(!jsonIn) {
-        std::cerr << "BURRO" << std::endl;
+        std::cerr << "Arquivo de carregamento não encontrado" << std::endl;
         exit(1);
     }
 
@@ -41,7 +40,7 @@ void carregar(const std::vector<Jogador>& jogadores) {
     nlohmann::ordered_json infoJogadores = nlohmann::ordered_json::parse(jsonIn);
     nlohmann::ordered_json::iterator it = infoJogadores.begin();
 
-    for (Jogador j : jogadores) {
+    for (Jogador& j : jogadores) {
         if (it != infoJogadores.end()) {
             j.carregar(*it);
             j.mostrarInfo();
@@ -52,7 +51,7 @@ void carregar(const std::vector<Jogador>& jogadores) {
 }
 
 int main(void) {
-    Jogador jogador;
-    // salvar({jogador});
-    carregar({jogador});
+    std::vector<Jogador> jogadores = {Jogador()};
+    carregar(jogadores);
+    salvar(jogadores);
 }

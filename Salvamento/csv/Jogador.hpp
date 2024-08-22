@@ -1,5 +1,4 @@
 #pragma once
-#include "json.hpp"
 
 class Jogador {
 private:
@@ -14,23 +13,22 @@ public:
         ):
         posicao(pos),
         tamanho(tam), 
-        vida(v)
-        {
+        vida(v) {
             // Nada aqui!
     }
     ~Jogador() {
 
     }
-    void salvar(nlohmann::ordered_json& json) {
-        // json[chave] = {info}
-        json["posicao"] = { {"x", posicao[0]}, {"y", posicao[1]}};
-        json["tamanho"] = { {"x", tamanho[0]}, {"y", tamanho[1]}};
-        json["vida"] = vida;
+    std::vector<float> salvar() {
+        // vetor com os valores do jogador na ordem correta do csv:
+        return std::vector<float> {
+            posicao[0], posicao[1], tamanho[0], tamanho[1], (float) vida
+        };
     }
-    void carregar(nlohmann::ordered_json& json) {
-        posicao = {json["posicao"]["x"], json["posicao"]["y"]};
-        tamanho = {json["tamanho"]["x"], json["tamanho"]["y"]};
-        vida = json["vida"];
+    void carregar(std::vector<float> valores) {
+        posicao = {valores[0], valores[1]};
+        tamanho = {valores[2], valores[3]};
+        vida = valores[4];
     }
     void mostrarInfo() {
         std::cout << "Posição: " <<  posicao[0] << " " << posicao[1] << std::endl << "Tamanho: " << tamanho[0] << " " << tamanho[1] << std::endl << "Vida: " << vida << std::endl;
