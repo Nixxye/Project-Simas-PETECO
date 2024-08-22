@@ -5,3 +5,5 @@
 [CSV](https://github.com/d99kris/rapidcsv/?tab=readme-ov-file)
 
 [XML](https://github.com/leethomason/tinyxml2)
+
+[Protobuf](https://github.com/protocolbuffers/protobuf)

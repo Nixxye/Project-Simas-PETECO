@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+message Jogador {
+    repeated float posicao = 1;
+    repeated float tamanho = 2;
+    int32 vida = 3;
+}
