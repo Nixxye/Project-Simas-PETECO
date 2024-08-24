@@ -1,0 +1,1 @@
+# ADICIONE A PASTA "lib" e "include" DO SFML AQUI
