@@ -37,4 +37,4 @@ link:
 	g++ $(OBJ_FILES) -o main -LSFML/lib -lsfml-graphics -lsfml-window -lsfml-system -lopengl32 -lsfml-audio
 # Limpar os arquivos .o e o executável
 clean:
-	rm -rf $(OBJ_DIR)/*.o main
+	@if exist $(OBJ_DIR)/*.o main rm -rf $(OBJ_DIR)/*.o main
